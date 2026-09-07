@@ -39,9 +39,9 @@ window.BSU_DATA = {
       "capability": "Predicting the brain: reading sentences (Pereira 2018)",
       "metric": "Brain-Score (share of the noise ceiling)",
       "models": ["random-vit", "CLIP-B32", "GPT-2", "Qwen-3B", "BLIP-2"],
-      "scores": [0.123, 0.464, 0.531, 0.708, 0.737],
+      "scores": [0.123, 0.464, 0.601, 0.707, 0.739],
       "null_floor": 0.123,
-      "reading": "How well each model predicts the brain's language network. Even an untrained model scores a little (0.12) just from random patterns. That's the null baseline, marked on the left. The real models clear it by about 4×, and the bigger language models (Qwen, BLIP-2) predict it best. Higher is better."
+      "reading": "How well each model predicts the brain's language network. Even an untrained model scores a little (0.12) just from random patterns. That's the null baseline, marked on the left. The real models clear it by four to six times, and the bigger models (Qwen, BLIP-2) predict it best. Higher is better. One caveat about GPT-2, the middle bar. A model has many internal layers, and we have to pick which one to read the answer from. GPT-2's was picked by trying all twelve on this very test and keeping whichever did best, which makes its bar flattering next to the others, none of which were tuned that way. Before that choice it sat at 0.53. We let that choice count once, here, and then use the same layer unchanged everywhere else GPT-2 appears on this site, so no other result on this page is inflated by it."
     },
     "it_encoding": {
       "capability": "Predicting the brain: seeing objects (MajajHong 2015)",
@@ -84,6 +84,14 @@ window.BSU_DATA = {
       "scores": [0.120, 0.150, 0.157, 0.186, 0.213],
       "null_floor": 0.05,
       "reading": "Predicting a brain watching a full movie, with picture, sound, and dialogue all at once. Each sense on its own predicts the brain a little (0.12–0.16); combining all three does better (0.19); and a smarter way of combining them, which lets each sense pull its own weight, does best (0.21). That matches the published benchmark's own baseline (about 0.20–0.25). The best published result reaches about 0.32 using a single native multimodal model. Whether that extra comes from the model itself or from a more polished pipeline, we haven't tested head-to-head. Worth knowing: an earlier version of this scored near zero, not because the senses don't help but because the model's features and the brain scans weren't lined up in time. Fixing the timing brought it up into the published range."
+    },
+    "whole_brain_encoding": {
+      "capability": "Predicting the brain: listening to stories, everywhere at once (LeBel 2023)",
+      "metric": "raw correlation, NOT ceiling-normalized — compare bars to each other only",
+      "models": ["GPT-2 (124M)", "Qwen3.6 (27B)"],
+      "scores": [0.1095, 0.1318],
+      "null_floor": 0.0032,
+      "reading": "Every other brain test on this page aims at one patch of cortex that was picked in advance because we expected the model to do well there. This one aims at all of it: 20,484 locations across the whole cortex of a person listening to stories, with nothing filtered out. Most of the brain turns out to be barely predictable from what a language model knows, and a minority is predicted well — that lopsided spread is the reason to look everywhere instead of at one region, and it is invisible if you only report the region you chose. Scrambling when each word was heard drops the score to nothing (the dashed line), so the models are genuinely tracking the story as it unfolds rather than its general flavour. Two models, 220-fold apart in size: the 27-billion one wins by about a fifth. Real, but a long way short of what the size difference might suggest. If we narrow the same predictions down to just the parts of cortex known to handle language, both models do roughly twice as well there (0.20 for the small one), which is the sanity check that the whole-cortex number is diluted by regions that were never going to be predictable, not broken."
     }
   },
   "capability_status": {
